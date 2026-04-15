@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fatima Collection</title>
+  <style>
+    * {margin: 0; padding: 0; box-sizing: border-box}
+    body {
+      font-family: "Times New Roman", Times, serif;
+      line-height: 1.6;
+      color: white;
+      background: black;
+    }
+    .navbar {
+      background: #111;
+      color: white;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 99;
+    }
+    .cart-icon {
+      font-size: 20px;
+      cursor: pointer;
+    }
+    #jumlah-cart {
+      background: #FF3333;
+      color: white;
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-size: 12px;
+      margin-left: 4px;
+    }
+    .hero {
+      background: black;
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+      border-bottom: 2px solid #C9A961;
+    }
+    .hero h1 {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+    .tagline {margin-bottom: 20px}
+    #produk {
+      padding: 40px 20px;
+      max-width: 500px;
+      margin: auto;
+    }
+    #produk h2 {
+      text-align: center;
+      margin-bottom: 24px;
+      color: white;
+    }
+    .card {
+      border: 1px solid #444;
+      background: #111;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .badge {
+      position: absolute;
+      top: 12px;
+      right: -28px;
+      background: #C9A961;
+      color: #000;
+      padding: 4px 32px;
+      font-size: 12px;
+      font-weight: bold;
+      transform: rotate(45deg);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+    .badge-diskon {
+      background: #FF3333;
+      color: white;
+    }
+    .deskripsi {
+      font-size: 14px;
+      margin: 8px 0;
+      color: #ddd;
+    }
+    .harga {
+      color: #C9A961;
+      font-weight: bold;
+      margin: 8px 0;
+    }
+    .btn-order {
+      display: inline-block;
+      background: #25D366;
+      color: white;
+      padding: 10px 0;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 14px;
+      margin-top: 10px;
+      border: none;
+      width: 100%;
+      cursor: pointer;
+      font-family: "Times New Roman", Times, serif;
+      text-align: center;
+    }
+    footer {
+      background: #111;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 999;
+    }
+    .modal-content {
+      background: #111;
+      margin: 10% auto;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      border: 1px solid #444;
+      border-radius: 8px;
+      color: white;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .close {
+      float: right;
+      font-size: 28px;
+      cursor: pointer;
+    }
+    .item-cart {
+      border-bottom: 1px solid #333;
+      padding: 8px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .item-cart button {
+      background: #FF3333;
+      color: white;
+      border: none;
+      padding: 2px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .total {
+      margin: 16px 0;
+      text-align: right;
+    }
+    .form-checkout {
+      margin: 16px 0;
+      border-top: 1px solid #333;
+      padding-top: 16px;
+    }
+    .input-field {
+      width: 100%;
+      background: #222;
+      border: 1px solid #444;
+      color: white;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 14px;
+    }
+    .input-field::placeholder {
+      color: #888;
+    }
+    .modal-content .btn-order {
+      position: sticky;
+      bottom: 0;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <h2>Fatima Collection</h2>
+    <div class="cart-icon" onclick="bukaKeranjang()">
+      🛒 <span id="jumlah-cart">0</span>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1>Fatima Collection</h1>
+    <p class="tagline">Muslim Wear Elegan & Nyaman</p>
+  </div>
+
+  <section id="produk">
+    <h2>Koleksi Kami</h2>
+    
+    <div class="card">
+      <div class="badge">Best Seller</div>
+      <img src="https://i.postimg.cc/8cQvX2wM/gamis-hitam.jpg" alt="Gamis Fatima Daily" style="width:100%; border-radius:6px; margin-bottom:12px">
+      <h3>Gamis Fatima Daily</h3>
+      <p class="deskripsi">Gamis polos cutting A-line, wudhu & busui friendly. Bahan Wolfis Premium adem, jatuh, nggak nerawang.</p>
+      <p><strong>Warna:</strong> Hitam, Navy, Milo, Sage</p>
+      <p><strong>Size:</strong> M - L - XL - XXL</p>
+      <p class="harga">Rp 189.000</p>
+      <button onclick="tambahCart('Gamis Fatima Daily', 189000)" class="btn-order">+ Keranjang</button>
+    </div>
+
+    <div class="card">
+      <div class="badge badge-diskon">Diskon 10%</div>
+      <img src="https://i.postimg.cc/7YQnZ5kT/gamis-plisket.jpg" alt="Gamis Plisket Fatima" style="width:100%; border-radius:6px; margin-bottom:12px">
+      <h3>Gamis Plisket Fatima</h3>
+      <p class="deskripsi">Gamis mewah aksen plisket di rok. Cocok buat kondangan & acara formal. Bahan Jersey premium stretch, flowy.</p>
+      <p><strong>Warna:</strong> Maroon, Emerald, Dusty Pink</p>
+      <p><strong>Size:</strong> All Size fit to XL</p>
+      <p class="harga"><s style="color:#888">Rp 255.000</s> Rp 229.000</p>
+      <button onclick="tambahCart('Gamis Plisket Fatima', 229000)" class="btn-order">+ Keranjang</button>
+    </div>
+
+    <div class="card">
+      <img src="https://i.postimg.cc/9f8wPj2m/set-syari.jpg" alt="Set Syari Fatima" style="width:100%; border-radius:6px; margin-bottom:12px">
+      <h3>Set Syari Fatima</h3>
+      <p class="deskripsi">Satu set gamis + khimar syar'i nutup dada. Bahan Ceruty Babydoll full furing, nggak panas sama sekali.</p>
+      <p><strong>Warna:</strong> Black, Coksu, Army</p>
+      <p><strong>Size:</strong> L - XL - XXL</p>
+      <p class="harga">Rp 279.000</p>
+      <button onclick="tambahCart('Set Syari Fatima', 279000)" class="btn-order">+ Keranjang</button>
+    </div>
+  </section>
+
+  <div id="keranjang" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="tutupKeranjang()">&times;</span>
+      <h3>Keranjang Belanja</h3>
+      <div id="isi-keranjang"></div>
+      <p class="total"><strong>Subtotal: Rp <span id="total-harga">0</span></strong></p>
+      
+      <div class="form-checkout">
+        <input type="text" id="nama" placeholder="Nama Lengkap" class="input-field">
+        <textarea id="alamat" placeholder="Alamat Lengkap: Jalan, RT/RW, Kel, Kec, Kota, Kode Pos" class="input-field" rows="3"></textarea>
+        <select id="ekspedisi" class="input-field">
+          <option value="">Pilih Jasa Kirim</option>
+          <option value="JNE Reguler">JNE Reguler</option>
+          <option value="J&T Express">J&T Express</option>
+          <option value="SiCepat REG">SiCepat REG</option>
+          <option value="COD - Bayar di Tempat">COD - Bayar di Tempat</option>
+        </select>
+      </div>
+      
+      <a id="checkout-wa" href="#" class="btn-order" target="_blank">Checkout via WA</a>
+    </div>
+  </div>
+
+  <script>
+    let cart = [];
+
+    function tambahCart(nama, harga) {
+      cart.push({nama: nama, harga: harga});
+      updateCart();
+      alert(nama + ' masuk keranjang!');
+    }
+
+    function updateCart() {
+      document.getElementById('jumlah-cart').innerText = cart.length;
+      
+      let isi = '';
+      let total = 0;
+      cart.forEach((item, i) => {
+        isi += `<div class="item-cart">
+          <span>${item.nama}</span>
+          <span>Rp ${item.harga.toLocaleString('id-ID')} <button onclick="hapusItem(${i})">x</button></span>
+        </div>`;
+        total += item.harga;
+      });
+      
+      document.getElementById('isi-keranjang').innerHTML = isi || 'Keranjang kosong';
+      document.getElementById('total-harga').innerText = total.toLocaleString('id-ID');
+      buatLinkWA();
+    }
+
+    function buatLinkWA() {
+      let total = 0;
+      cart.forEach(item => total += item.harga);
+      
+      let nama = document.getElementById('nama').value;
+      let alamat = document.getElementById('alamat').value;
+      let ekspedisi = document.getElementById('ekspedisi').value;
+      
+      let teksWA = `Halo Fatima Collection, saya mau order:%0A%0A`;
+      cart.forEach(item => {
+        teksWA += `- ${item.nama} Rp ${item.harga.toLocaleString('id-ID')}%0A`;
+      });
+      teksWA += `%0ASubtotal: Rp ${total.toLocaleString('id-ID')}%0A%0A`;
+      teksWA += `Data Pembeli:%0A`;
+      teksWA += `Nama: ${nama || '-'}%0A`;
+      teksWA += `Alamat: ${alamat || '-'}%0A`;
+      teksWA += `Ekspedisi: ${ekspedisi || '-'}%0A%0A`;
+      teksWA += `Mohon info total + ongkir ya kak 🙏`;
+      
+      document.getElementById('checkout-wa').href = `https://wa.me/6283817073678?text=${teksWA}`;
+    }
+
+    function hapusItem(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    function bukaKeranjang() {
+      document.getElementById('keranjang').style.display = 'block';
+      updateCart();
+    }
+
+    function tutupKeranjang() {
+      document.getElementById('keranjang').style.display = 'none';
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('nama').addEventListener('input', buatLinkWA);
+      document.getElementById('alamat').addEventListener('input', buatLinkWA);
+      document.getElementById('ekspedisi').addEventListener('change', buatLinkWA);
+    });
+  </script>
+</body>
+</html>
+
+  <footer>
+    <p>IG: @fatimacollection | Cianjur, Jawa Barat</p>
+  </footer>
