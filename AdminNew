@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - Fatima Collection</title>
+  <style>
+    * {margin:0; padding:0; box-sizing:border-box}
+    body {font-family:sans-serif; background:#0a0a0a; color:#fff; padding:20px; transition:0.3s}
+    body.pake-bg::before {content:""; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:-1}
+    h1 {text-align:center; margin-bottom:20px; color:#C9A961}
+    .container {max-width:600px; margin:auto}
+    .form-box {background:rgba(17,17,17,0.9); padding:20px; border-radius:8px; border:1px solid #333; margin-bottom:20px; backdrop-filter:blur(4px)}
+    .form-box h3 {margin-bottom:16px; color:#C9A961}
+    .input-field {width:100%; background:#222; border:1px solid #444; color:#fff; padding:10px; margin-bottom:12px; border-radius:6px; font-size:14px}
+    .btn {width:100%; background:#C9A961; color:#000; padding:12px; border:none; border-radius:6px; font-weight:bold; cursor:pointer; margin-top:8px}
+    .btn-delete {background:#FF3333; color:#fff; padding:6px 12px; border:none; border-radius:4px; cursor:pointer; font-size:12px}
+    .produk-list {background:rgba(17,17,17,0.9); padding:20px; border-radius:8px; border:1px solid #333; backdrop-filter:blur(4px)}
+    .item-admin {border-bottom:1px solid #333; padding:12px 0; display:flex; justify-content:space-between; align-items:center; gap:10px}
+    .item-admin img {width:50px; height:50px; object-fit:cover; border-radius:4px}
+    .info {flex:1}
+    .info b {color:#C9A961}
+    label {font-size:12px; color:#aaa; display:block; margin-bottom:4px}
+    small {font-size:11px; color:#888; display:block; margin-top:-8px; margin-bottom:8px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Admin Panel Fatima</h1>
+    
+    <div class="form-box">
+      <h3>Tambah Produk Baru</h3>
+      <label>Nama Produk</label>
+      <input type="text" id="nama" class="input-field" placeholder="Gamis Batik Fatima">
+      <label>Link Foto Produk</label>
+      <input type="text" id="foto" class="input-field" placeholder="https://i.postimg.cc/xxx/gamis.jpg">
+      <label>Deskripsi</label>
+      <textarea id="deskripsi" class="input-field" rows="2" placeholder="Bahan adem, busui friendly"></textarea>
+      <label>Harga Asli</label>
+      <input type="number" id="harga" class="input-field" placeholder="249000">
+      <label>Diskon % (kosongin kalo nggak diskon)</label>
+      <input type="number" id="diskon" class="input-field" placeholder="15">
+      <label>Badge (Best Seller / New / kosongin)</label>
+      <input type="text" id="badge" class="input-field" placeholder="Best Seller">
+      <button class="btn" onclick="tambahProduk()">+ Tambah Produk</button>
+    </div>
+
+    <div class="form-box">
+      <h3>Setting Ongkir & Pembayaran</h3>
+      <label>Ongkir Flat Se-Indonesia</label>
+      <input type="number" id="ongkir" class="input-field" placeholder="15000">
+      <label>Nama Bank</label>
+      <input type="text" id="nama-bank" class="input-field" placeholder="BCA">
+      <label>Nomor Rekening</label>
+      <input type="text" id="no-rek" class="input-field" placeholder="1234567890">
+      <label>Atas Nama Rekening</label>
+      <input type="text" id="an-rek" class="input-field" placeholder="Fatima Collection">
+      <label>Nomor DANA</label>
+      <input type="text" id="no-dana" class="input-field" placeholder="083817073678">
+      <label>Link Gambar QRIS</label>
+      <input type="text" id="link-qris" class="input-field" placeholder="https://i.postimg.cc/xxx/qris.jpg">
+      <button class="btn" onclick="simpanSetting()">Simpan Setting</button>
+    </div>
+
+    <div class="form-box">
+      <h3>Setting Tampilan - Islami Elegan</h3>
+      <label>Background Admin</label>
+      <input type="text" id="bg-admin" class="input-field" placeholder="https://images.unsplash.com/photo-1618220179428-22790b461013?q=80&w=1920">
+      <label>Background Toko Customer</label>
+      <input type="text" id="bg-toko" class="input-field" placeholder="https://images.unsplash.com/photo-1591604466107-ec97de577aff?q=80&w=1920">
+      <small>Kosongin = balik item polos</small>
+      <button class="btn" onclick="simpanBg()">Simpan Background</button>
+    </div>
+
+    <div class="produk-list">
+      <h3>Daftar Produk</h3>
+      <div id="list-produk"></div>
+    </div>
+  </div>
+
+  <script>
+    let produk = JSON.parse(localStorage.getItem('produkFatima')) || [];
+    let ongkir = localStorage.getItem('ongkirFatima') || 15000;
+    let namaBank = localStorage.getItem('namaBankFatima') || '';
+    let noRek = localStorage.getItem('noRekFatima') || '';
+    let anRek = localStorage.getItem('anRekFatima') || '';
+    let noDana = localStorage.getItem('noDanaFatima') || '';
+    let linkQris = localStorage.getItem('linkQrisFatima') || '';
+    let bgAdmin = localStorage.getItem('bgAdminFatima') || '';
+    let bgToko = localStorage.getItem('bgTokoFatima') || '';
+
+    document.getElementById('ongkir').value = ongkir;
+    document.getElementById('nama-bank').value = namaBank;
+    document.getElementById('no-rek').value = noRek;
+    document.getElementById('an-rek').value = anRek;
+    document.getElementById('no-dana').value = noDana;
+    document.getElementById('link-qris').value = linkQris;
+    document.getElementById('bg-admin').value = bgAdmin;
+    document.getElementById('bg-toko').value = bgToko;
+
+    if(bgAdmin) {
+      document.body.style.background = `url('${bgAdmin}') no-repeat center center fixed`;
+      document.body.style.backgroundSize = 'cover';
+      document.body.classList.add('pake-bg');
+    }
+
+    function renderList() {
+      let html = '';
+      produk.forEach((p, i) => {
+        let hargaFinal = p.diskon ? p.harga - (p.harga * p.diskon / 100) : p.harga;
+        html += `
+          <div class="item-admin">
+            <img src="${p.foto}" alt="">
+            <div class="info">
+              <b>${p.nama}</b><br>
+              <small>Rp ${hargaFinal.toLocaleString('id-ID')} ${p.diskon ? `<s style="color:#888">Rp ${p.harga.toLocaleString('id-ID')}</s>` : ''}</small>
+            </div>
+            <button class="btn-delete" onclick="hapusProduk(${i})">Hapus</button>
+          </div>`;
+      });
+      document.getElementById('list-produk').innerHTML = html || 'Belum ada produk';
+    }
+
+    function tambahProduk() {
+      let nama = document.getElementById('nama').value;
+      let foto = document.getElementById('foto').value;
+      let deskripsi = document.getElementById('deskripsi').value;
+      let harga = parseInt(document.getElementById('harga').value);
+      let diskon = parseInt(document.getElementById('diskon').value) || 0;
+      let badge = document.getElementById('badge').value;
+      if(!nama || !foto || !harga) return alert('Nama, foto, harga wajib diisi!');
+      produk.push({nama, foto, deskripsi, harga, diskon, badge});
+      localStorage.setItem('produkFatima', JSON.stringify(produk));
+      document.getElementById('nama').value = '';
+      document.getElementById('foto').value = '';
+      document.getElementById('deskripsi').value = '';
+      document.getElementById('harga').value = '';
+      document.getElementById('diskon').value = '';
+      document.getElementById('badge').value = '';
+      renderList();
+      alert('Produk ditambah!');
+    }
+
+    function hapusProduk(i) {
+      if(confirm('Yakin hapus?')) {
+        produk.splice(i, 1);
+        localStorage.setItem('produkFatima', JSON.stringify(produk));
+        renderList();
+      }
+    }
+
+    function simpanSetting() {
+      localStorage.setItem('ongkirFatima', document.getElementById('ongkir').value);
+      localStorage.setItem('namaBankFatima', document.getElementById('nama-bank').value);
+      localStorage.setItem('noRekFatima', document.getElementById('no-rek').value);
+      localStorage.setItem('anRekFatima', document.getElementById('an-rek').value);
+      localStorage.setItem('noDanaFatima', document.getElementById('no-dana').value);
+      localStorage.setItem('linkQrisFatima', document.getElementById('link-qris').value);
+      alert('Setting ongkir & pembayaran disimpan!');
+    }
+
+    function simpanBg() {
+      localStorage.setItem('bgAdminFatima', document.getElementById('bg-admin').value);
+      localStorage.setItem('bgTokoFatima', document.getElementById('bg-toko').value);
+      alert('Background disimpan! Refresh buat liat perubahan.');
+      location.reload();
+    }
+
+    renderList();
+  </script>
+</body>
+</html>
